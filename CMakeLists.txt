@@ -7,6 +7,8 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(trajectory_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -22,6 +24,17 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+add_executable(armando_teleop_keyboard src/armando_teleop_keyboard.cpp)
+ament_target_dependencies(armando_teleop_keyboard
+  rclcpp
+  trajectory_msgs
+)
+
+install(TARGETS
+  armando_teleop_keyboard
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(
   DIRECTORY launch meshes urdf config worlds models

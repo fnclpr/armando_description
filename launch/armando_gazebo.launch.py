@@ -68,6 +68,14 @@ def generate_launch_description():
         parameters=[robot_description_param, {'use_sim_time': True}],
     )
 
+    rqt_image_view_node = Node(
+        package='rqt_image_view',
+        executable='rqt_image_view',
+        name='rqt_image_view',
+        arguments=['/wrist_camera/image_raw'], # Apri direttamente lo stream del polso
+        output='screen'
+    )
+
     # Launch di Gazebo Harmonic
     gazebo_launch = IncludeLaunchDescription(
         PathJoinSubstitution([FindPackageShare('ros_gz_sim'), 'launch', 'gz_sim.launch.py']),
@@ -113,7 +121,10 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=[
             '/camera@sensor_msgs/msg/Image@gz.msgs.Image',
-            '/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            'wrist_camera@sensor_msgs/msg/Image@gz.msgs.Image',
+            '/wrist_camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            
             '/world/armando_workbench/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             
             # Bridge per i comandi di presa 
@@ -128,7 +139,9 @@ def generate_launch_description():
         ],
         remappings=[
             ('/camera', '/camera/image_raw'),
-            ('/camera_info', '/camera/camera_info'),
+            ('/camera/camera_info', '/camera/camera_info'),
+            ('/wrist_camera', '/wrist_camera/image_raw'),
+            ('/wrist_camera/camera_info', '/wrist_camera/camera_info'),
         ],
         output='screen',
         parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
@@ -204,6 +217,7 @@ def generate_launch_description():
         gz_resource_path,
         gz_gui_config_path,
         robot_state_publisher_node,
+        rqt_image_view_node,
         gui_arg,
         world_arg,
         gazebo_launch,

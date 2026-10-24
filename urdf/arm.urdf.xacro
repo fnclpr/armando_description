@@ -18,5 +18,15 @@
     <!-- Camera - commentare per escludere dal modello -->
     <xacro:include filename="armando_camera.urdf.xacro"/>
 
+    <!-- Camera 1 (Fissa): usa tutti i valori di default -->
+    <xacro:camera_sensor prefix="camera" parent_link="camera_mount" topic_name="camera">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:camera_sensor>
+
+    <!-- Camera 2 (Wrist): usa i default per risoluzione e framerate -->
+    <xacro:camera_sensor prefix="wrist_camera" parent_link="crawer_base" topic_name="wrist_camera">
+        <origin xyz="0 0 0" rpy="0 -1.5708 0"/>
+    </xacro:camera_sensor>
+    
 </robot>
  
