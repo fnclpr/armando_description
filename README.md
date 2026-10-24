@@ -76,14 +76,6 @@ ros2 run armando_description armando_teleop_keyboard
 
 ---
 
-## 📐 Topic & Frame Architecture
-
-- **Joint Trajectory Topic:** `/joint_trajectory_controller/joint_trajectory` (`trajectory_msgs/msg/JointTrajectory`)
-- **Wrist Camera Optical Frame:** `wrist_camera_optical_frame`
-- **Wrist Camera Image Topic:** `/wrist_camera/image_raw` (`sensor_msgs/msg/Image`)
-
----
-
 **Author:** Francesco Lepre 
 
 **Course:** Robotics Lab 2026 — Università degli Studi di Napoli Federico II
